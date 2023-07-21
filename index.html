@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Rock Paper Scissors</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <script>
+            let getComputerChoice = () => {
+                let choice = Math.floor(Math.random() * 3);
+                if (choice === 0) {
+                    return "rock";
+                }
+                else if (choice === 1) {
+                    return "paper";
+                }
+                else {
+                    return "scissors";
+                }
+            }
+            let playRound = (playerSelection, computerSelection) => {
+                playerSelection = prompt("Rock, Paper, or Scissors.");
+                playerSelection = playerSelection.toLowerCase();
+                computerSelection = getComputerChoice();
+
+                if (playerSelection === "rock" && computerSelection === "scissors") {
+                   return `Player won ${playerSelection} beats ${computerSelection}!`
+                }
+                else if (playerSelection === "paper" && computerSelection === "scissors") {
+                    return `Player won ${playerSelection} beats ${computerSelection}!`
+                }
+                else if (playerSelection === "scissors" && computerSelection === "paper") {
+                    return `Player won ${playerSelection} beats ${computerSelection}!`;
+                }
+                else {
+                    return `Computer won ${computerSelection} beats ${playerSelection}!`;
+                }
+            }
+            let game = () => {
+                for (let i = 0; i<5; i++) {
+                    console.log(playRound());
+                }
+            }
+            game();
+            
+        </script>
+    </body>
+</html>
