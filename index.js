@@ -12,59 +12,94 @@ let getComputerChoice = () => { // gets computer choices returns choice based on
         return "scissors";
     }
 }
-let playRound = (playerSelection, computerSelection) => {
-    playerSelection = prompt("Rock, Paper, or Scissors.");
-    playerSelection = playerSelection.toLowerCase();
+let playRound = (playerSelection) => {
     computerSelection = getComputerChoice();
+    console.log(playerSelection);
     console.log(computerSelection);
 
-    if (playerSelection === "rock" && computerSelection === "scissors") {
-        humanScore ++;
-       return `Player won ${playerSelection} beats ${computerSelection}!`
-    }
-    else if (playerSelection === "rock" && computerSelection === "paper") {
-        computerScore ++;
-        return `Computer won ${computerSelection} beats ${playerSelection}!`;
-    }
-    else if (playerSelection === "paper" && computerSelection === "rock") {
-        humanScore ++;
+    
+        if (playerSelection === "rock" && computerSelection === "scissors") {
+            humanScore ++;
+            updateScore();
         return `Player won ${playerSelection} beats ${computerSelection}!`
+        }
+        else if (playerSelection === "rock" && computerSelection === "paper") {
+            computerScore ++;
+            updateScore();
+            return `Computer won ${computerSelection} beats ${playerSelection}!`;
+        }
+        else if (playerSelection === "paper" && computerSelection === "rock") {
+            humanScore ++;
+            updateScore();
+            return `Player won ${playerSelection} beats ${computerSelection}!`
+        }
+        else if (playerSelection === "paper" && computerSelection === "scissors") {
+            computerScore ++;
+            updateScore();
+            return `Computer won ${computerSelection} beats ${playerSelection}!`;
+        }
+        else if (playerSelection === "scissors" && computerSelection === "paper") {
+            humanScore ++;
+            updateScore();
+            return `Player won ${playerSelection} beats ${computerSelection}!`;
+        }
+        else if (playerSelection === "scissors" && computerSelection === "rock") {
+            computerScore ++;
+            updateScore();
+            return `Computer won ${computerSelection} beats ${playerSelection}!`;
+        }
+        else {
+            return "It was a draw!"
+        }
+    
+}
+
+let checkWin = () => {
+    if(humanScore === 5){
+        resultsDiv.textContent = "You won the game!"
     }
-    else if (playerSelection === "paper" && computerSelection === "scissors") {
-        computerScore ++;
-        return `Computer won ${computerSelection} beats ${playerSelection}!`;
-    }
-    else if (playerSelection === "scissors" && computerSelection === "paper") {
-        humanScore ++;
-        return `Player won ${playerSelection} beats ${computerSelection}!`;
-    }
-    else if (playerSelection === "scissors" && computerSelection === "rock") {
-        computerScore ++;
-        return `Computer won ${computerSelection} beats ${playerSelection}!`;
+    else if (computerScore === 5){
+        resultsDiv.textContent = "The computer has won the game!"
     }
     else {
-        let draw = "draw";
-        return {
-            message: "It was a draw!",
-            variable: draw
-        };
+        return;
     }
 }
 
-let game = () => {
-    var i=0
-    while ( i<5){
-        console.log(playRound());
-        i++
-        if (playRound.varaible === "draw") {
-            i--
-        }
-    }
-    if (humanScore > computerScore) {
-        console.log(`Player won, Score: ${humanScore} : ${computerScore}`);
-    }
-    else {
-        console.log(`Computer won, Score: ${computerScore} : ${humanScore}`)
-    }
+let updateScore = () => {
+    scoreDiv.textContent = `Score ${humanScore} : ${computerScore}`;
 }
-game();
+
+resultsDiv = document.querySelector(".results");
+div = document.createElement("div");
+scoreDiv = document.createElement("div")
+updateScore();
+resultsDiv.appendChild(scoreDiv);
+
+const rockButton = document.querySelector("#rock"); // rock button
+rock.addEventListener('click', () => {
+    playerSelection =  "rock"
+    result = playRound(playerSelection);
+    div.textContent = result;
+    resultsDiv.appendChild(div);
+    checkWin()
+});
+
+const paperButton = document.querySelector("#paper");
+paper.addEventListener('click', () => {
+    playerSelection = "paper";
+    result = playRound(playerSelection);
+    div.textContent = result;
+    resultsDiv.appendChild(div);
+    checkWin()
+});
+
+const scissorsButton = document.querySelector("#scissors");
+scissors.addEventListener('click', () => {
+    playerSelection = "scissors";
+    result = playRound(playerSelection);
+    div.textContent = result;
+    resultsDiv.appendChild(div);
+    checkWin()
+});
+
