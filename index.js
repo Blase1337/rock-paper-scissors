@@ -57,49 +57,67 @@ let playRound = (playerSelection) => {
 let checkWin = () => {
     if(humanScore === 5){
         resultsDiv.textContent = "You won the game!"
+        return true;
     }
     else if (computerScore === 5){
         resultsDiv.textContent = "The computer has won the game!"
+        return true;
     }
     else {
-        return;
+        return false;
     }
 }
 
 let updateScore = () => {
-    scoreDiv.textContent = `Score ${humanScore} : ${computerScore}`;
+    scoreDiv.textContent = `${humanScore} : ${computerScore}`;
 }
 
-resultsDiv = document.querySelector(".results");
-div = document.createElement("div");
-scoreDiv = document.createElement("div")
-updateScore();
-resultsDiv.appendChild(scoreDiv);
+let resultsDiv = document.querySelector(".results");
+let div = document.createElement("div");
+let scoreDiv = document.querySelector(".score")
+
+function showResultsDiv() {
+    if (resultsDiv.textContent.trim() !== "") {
+        resultsDiv.style.display = "block";
+    }
+}
+
+resultsDiv.addEventListener("DOMNodeInserted", showResultsDiv);
+
+updateScore(); //Updates score of game
+let winStatus = false;
 
 const rockButton = document.querySelector("#rock"); // rock button
 rock.addEventListener('click', () => {
-    playerSelection =  "rock"
-    result = playRound(playerSelection);
-    div.textContent = result;
-    resultsDiv.appendChild(div);
-    checkWin()
+    winStatus = checkWin();
+    if (winStatus != true){
+        result = playRound("rock");
+        div.textContent = result;
+        resultsDiv.appendChild(div);
+}
+    
 });
 
 const paperButton = document.querySelector("#paper");
 paper.addEventListener('click', () => {
-    playerSelection = "paper";
-    result = playRound(playerSelection);
-    div.textContent = result;
-    resultsDiv.appendChild(div);
-    checkWin()
+    winStatus = checkWin();
+    if (winStatus != true){
+        result = playRound("paper");
+        div.textContent = result;
+        resultsDiv.appendChild(div);
+    }
 });
 
 const scissorsButton = document.querySelector("#scissors");
 scissors.addEventListener('click', () => {
-    playerSelection = "scissors";
-    result = playRound(playerSelection);
-    div.textContent = result;
-    resultsDiv.appendChild(div);
-    checkWin()
+    winStatus = checkWin();
+    if(winStatus != true){
+        result = playRound("scissors");
+        div.textContent = result;
+        resultsDiv.appendChild(div);
+    }
 });
+
+
+
 
